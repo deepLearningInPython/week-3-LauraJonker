@@ -16,7 +16,8 @@ import numpy as np
 # -----------------------------------------------
 
 def compute_output_size_1d(input_array, kernel_array):
-    pass
+    output_length = len(input_array) - len(kernel_array) + 1
+    return output_length
 
 
 # -----------------------------------------------
@@ -37,8 +38,10 @@ print(compute_output_size_1d(input_array, kernel_array))
 def convolve_1d(input_array, kernel_array):
     # Tip: start by initializing an empty output array (you can use your function above to calculate the correct size).
     # Then fill the cells in the array with a loop.
-    pass
-
+    convolve_array = np.empty(compute_output_size_1d(input_array, kernel_array))
+    for arr in range(len(convolve_array)):
+        convolve_array[arr] = np.dot(input_array[arr:arr + len(kernel_array)], kernel_array)
+    return convolve_array
 # -----------------------------------------------
 # Another tip: write test cases like this, so you can easily test your function.
 input_array = np.array([1, 2, 3, 4, 5])
@@ -56,8 +59,11 @@ print(convolve_1d(input_array, kernel_array))
 # -----------------------------------------------
 
 def compute_output_size_2d(input_matrix, kernel_matrix):
-    pass
-
+    input_height = np.shape(input_matrix)[0]
+    kernel_height = np.shape(kernel_matrix)[0]
+    input_width = np.shape(input_matrix)[1]
+    kernel_width = np.shape(kernel_matrix)[1]
+    return (input_height - kernel_height + 1, input_width - kernel_width + 1)
 
 # -----------------------------------------------
 
@@ -72,7 +78,9 @@ def compute_output_size_2d(input_matrix, kernel_matrix):
 def convolute_2d(input_matrix, kernel_matrix):
     # Tip: same tips as above, but you might need a nested loop here in order to
     # define which parts of the input matrix need to be multiplied with the kernel matrix.
-    pass
-
-
+    convolve_mat = np.empty(compute_output_size_2d(input_matrix, kernel_matrix))
+    for height in range(np.shape(convolve_mat)[0]):
+        for width in range(np.shape(convolve_mat)[1]):
+            convolve_mat[height, width] = np.sum(input_matrix[height:height + np.shape(kernel_matrix)[0], width:width + np.shape(kernel_matrix)[1]] * kernel_matrix)
+    return convolve_mat
 # -----------------------------------------------
